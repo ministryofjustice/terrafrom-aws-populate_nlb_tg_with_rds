@@ -21,7 +21,6 @@ This module depends on a correctly configured [AWS Provider](https://www.terrafo
 ```
 module "populate_nlb_tg_with_rds" {
   source        = "github.com/ministryofjustice/terrafrom-aws-populate_nlb_tg_with_rds"
-  version       = "0.1.0"
   rds_dns_name  = "my-db.ctjuxtulczykq.eu-west-1.rds.amazonaws.com"
   nlb_tg_arn    = "arn:aws:elasticloadbalancing:eu-west-1:01234567890:targetgroup/mytargetgroup/aabbccddee0044332211"
   max_lookup_per_invocation = "10" 
