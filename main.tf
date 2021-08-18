@@ -1,6 +1,6 @@
 # Cloudwatch event rule
 resource "aws_cloudwatch_event_rule" "populate_nlb_tg_with_rds_event" {
-  name                = "populate-nlb-tg-with-rds-event"
+  name                = "${var.resource_name_prefix}populate-nlb-tg-with-rds-event"
   description         = "Populate NLB Target Group with RDS IP"
   schedule_expression = var.schedule_expression
   depends_on          = [
@@ -26,7 +26,7 @@ resource "aws_lambda_permission" "allow_cloudwatch_80" {
 
 # IAM Role for Lambda function
 resource "aws_iam_role_policy" "populate_nlb_tg_with_rds_lambda" {
-  name = "populate-nlb-tg-with-rds-lambda"
+  name = "${var.resource_name_prefix}populate-nlb-tg-with-rds-lambda"
   role = aws_iam_role.populate_nlb_tg_with_rds_lambda.id
 
   policy = <<EOF
@@ -78,7 +78,7 @@ EOF
 }
 
 resource "aws_iam_role" "populate_nlb_tg_with_rds_lambda" {
-  name        = "populate-nlb-tg-with-rds-lambda"
+  name        = "${var.resource_name_prefix}populate-nlb-tg-with-rds-lambda"
   description = "Managed by Terraform"
 
   assume_role_policy = <<EOF
@@ -108,7 +108,7 @@ data "archive_file" "lambda_function" {
 # AWS Lambda function
 resource "aws_lambda_function" "populate_nlb_tg_with_rds_updater_80" {
   filename         = data.archive_file.lambda_function.output_path
-  function_name    = "populate_nlb_tg_with_rds_updater_80"
+  function_name    = "${var.resource_name_prefix}populate_nlb_tg_with_rds_updater_80"
   role             = aws_iam_role.populate_nlb_tg_with_rds_lambda.arn
   handler          = "populate_nlb_tg_with_rds.handler"
   source_code_hash = data.archive_file.lambda_function.output_base64sha256
