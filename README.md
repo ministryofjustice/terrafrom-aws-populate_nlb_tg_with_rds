@@ -1,6 +1,6 @@
 # terrafrom-aws-populate_nlb_tg_with_rds
 
-Populate network load balancer target group with RDS IP address
+Populate network load balancer target group with RDS IP address. This can be in fact any DNS resolvable to an instance like redshift DNS.
 
 # Overview
 
@@ -30,7 +30,7 @@ module "populate_nlb_tg_with_rds" {
 
 ### rds_dns_name
 
-the DNS name of the RDS database.
+the DNS name of the RDS database. This can be in fact any DNS resolvable to an instance like redshift DNS.
 
 ### nlb_tg_arn
 
@@ -42,15 +42,15 @@ Maximum number of invocations of DNS lookup.
 
 **Note:** This is a string value even though it is a number as it sets an environment variable
 
-## variables
-
 ### schedule_expression
 
 The aws cloudwatch event rule schedule expression that specifies when the lambda runs.
 
 Default = "rate(5 minutes)"  i.e. every "rate(5 minutes)" See [ScheduledEvents](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html)
 
+### resource_name_prefix
 
+The prefix to apply to resource names. E.g. setting this to cluster1- will create the Lambda as cluster1-populate-nlb-tg-with-rds-lambda rather than populate-nlb-tg-with-rds-lambda. default = "".
 
 ## References 
 
